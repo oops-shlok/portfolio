@@ -1,0 +1,142 @@
+.profile-container {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  height: 10%;
+  min-height: fit-content;
+}
+
+.profile-parent {
+  display: flex;
+  align-items: center;
+  color: aliceblue;
+}
+
+.profile-details-name {
+  font-size: 30px;
+  font-family: "Poppins SemiBold";
+}
+
+.profile-deatils-role {
+  display: flex;
+  flex-direction: column;
+  margin: 14px 0 24px 0;
+}
+
+.profile-details-role h1 {
+  font-size: 40px;
+  margin: 10px 0 20px 0;
+}
+
+.primary-text {
+  color: (--white);
+}
+
+.highlighted-text {
+  color: var(--orange);
+}
+
+.profile-role-tagline {
+  font-size: 19px;
+  margin: 5px 0 0 0;
+  font-family: "Poppins Light";
+}
+
+.profile-picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 1px 0px 0px #ffffff;
+  border-radius: 50%;
+  height: 350px;
+  width: 350px;
+  margin: 0 0px 10px 200px;
+}
+
+.profile-picture-background {
+  height: 92%;
+  width: 92%;
+  background-image: url("../../../res/Home/Profile\ Pic.png");
+  background-size: cover;
+  border-radius: 50%;
+  background-repeat: no-repeat;
+}
+
+.profile-picture-background:hover {
+  transform: scale(1.07);
+  transition: 1s ease-out;
+}
+
+.col .col-icon i {
+  color: #ffffff;
+  padding: 35px;
+  padding-left: 0px;
+}
+
+.col .col-icon i:hover {
+  transform: scale(1.5);
+}
+
+@media screen and (max-width: 1110px) {
+  .profile-picture {
+    margin: 0 0px 0 180px;
+    height: 200px;
+    width: 200px;
+  }
+  .profile-details {
+    font-size: 20px;
+    font-family: "Poppins SemiBold";
+  }
+  .profile-details-role .primary-text {
+    font-size: 12px;
+  }
+  .profile-options .btn {
+    width: 120px;
+    padding: 11px 0;
+    z-index: 700;
+  }
+}
+
+@media screen and (max-width: 910px) {
+  .profile-picture {
+    margin: 0 0px 0 4px;
+    height: 320px;
+    width: 320px;
+  }
+}
+
+@media screen and (max-width: 810px) {
+  .profile-picture {
+    margin: 0 !important;
+  }
+  .profile-parent {
+    flex-direction: column-reverse;
+    margin: 40px 0 0 0;
+  }
+  .profile-options {
+    display: flex;
+    justify-content: space-between;
+  }
+  .profile-details {
+    margin: 25px 0 0;
+  }
+  .profile-options,
+  .profile-details-role {
+    text-align: center;
+  }
+}
+@media screen and (max-width: 375px) {
+  .profile-picture {
+    height: 275px;
+    width: 275px;
+    margin-top: -90px;
+  }
+  .profile-details {
+    width: 90%;
+  }
+  .profile-details-role h1 {
+    font-size: 30px;
+    margin-top: 20px;
+  }
+}
