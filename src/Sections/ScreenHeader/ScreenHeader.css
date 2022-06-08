@@ -5,7 +5,6 @@
   display: flex;
   justify-content: space-between;
   background-color: var(--header-bg);
-  opacity: 0.9;
 }
 
 .header-left {
@@ -59,7 +58,7 @@
     height: 12vh;
   }
   .header-name {
-    margin-left: 0rem;
+    margin-left: 2rem;
   }
 }
 
@@ -85,11 +84,13 @@
 
   .header-name {
     font-size: 0.8rem;
-    margin-left: 0px;
+    margin-left: 0rem;
   }
 
   .header-right-list {
     font-size: 12px;
+    gap:0.5rem;
+    margin-left: 0rem;
   }
   .header-right-list ul {
     display: flex;

@@ -2,6 +2,7 @@ import "./App.css";
 import Home from "./Sections/Home/Home";
 import AboutMe from "./Sections/AboutMe/AboutMe";
 import ScreenHeader from "./Sections/ScreenHeader/ScreenHeader";
+import ProjectList from "./Sections/Project/ProjectList/ProjectList";
 
 function App() {
   return (
@@ -10,11 +11,11 @@ function App() {
       <Home />
       <AboutMe />
       <br/>
+      <div id="Projects"></div>
       <br/>
       <br/>
       <br/>
-      <br/>
-      <br/>
+      <ProjectList/>
     </div>
   );
 }

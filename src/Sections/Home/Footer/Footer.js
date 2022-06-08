@@ -3,7 +3,7 @@ import "./Footer.css";
 
 export default function Footer() {
   return (
-    <div className="footer-container">
+    <div className="footer-container" id="AboutMe">
       <div className="footer-parent">
         <img
           src={require("../../../res/Home/shape-bg.png")}

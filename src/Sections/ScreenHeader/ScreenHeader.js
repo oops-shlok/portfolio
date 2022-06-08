@@ -17,7 +17,9 @@ export default function ScreenHeader() {
             <Link spy={true} to="AboutMe" smooth={true}>
               <li>About Me</li>
             </Link>
-            <li>Projects</li>
+            <Link spy={true} to="Projects" smooth={true}>
+              <li>Projects</li>
+            </Link>
             <li>Contact Me</li>
           </ul>
         </div>
