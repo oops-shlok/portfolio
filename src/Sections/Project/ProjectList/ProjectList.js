@@ -5,7 +5,9 @@ export default function ProjectList() {
   return (
     <div className="project-container">
       <div className="project-header">
-        <h1 className="project-title">My Projects</h1>
+        <h1 className="project-title">
+          My <span className="highlighted-text">Projects</span>
+        </h1>
       </div>
       <div className="project-list-top">
         <div className="project-one">
