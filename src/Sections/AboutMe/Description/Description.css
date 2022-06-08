@@ -8,6 +8,8 @@
   min-height: fit-content;
   min-width: fit-content;
   background-image: url("../../../res/Home/bg.jpg");
+  margin-top: 60px;
+  margin-bottom: 40px;
 }
 .description-parent {
   color: aliceblue;
@@ -38,6 +40,10 @@
 
 .description-primary-text {
   color: var(--orange);
+}
+
+.description-about p img:hover {
+  transform: scale(1.07);
 }
 
 @media only screen and (max-width: 1110px) {
@@ -79,14 +85,14 @@
     width: 160px;
     margin-bottom: 100px;
   }
-  .description-header{
+  .description-header {
     margin-top: 20px;
     font-size: 20px;
   }
-  .description-about p{
-    font-size: 7px;;
+  .description-about p {
+    font-size: 7px;
   }
-  .description-about p img{
+  .description-about p img {
     width: 10%;
     height: 10%;
   }
@@ -100,13 +106,13 @@
     width: 100px;
     margin-bottom: 100px;
   }
-  .description-header h1{
+  .description-header h1 {
     font-size: 20px;
   }
-  .description-about p{
-    font-size: 10px;;
+  .description-about p {
+    font-size: 10px;
   }
-  .description-about p img{
+  .description-about p img {
     width: 10%;
     height: 10%;
   }

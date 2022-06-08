@@ -3,7 +3,7 @@ import "./Description.css";
 
 export default function Description() {
   return (
-    <div className="description-container">
+    <div className="description-container" id="AboutMe">
       <div className="description-parent">
         <div className="description-header">
           <h1>

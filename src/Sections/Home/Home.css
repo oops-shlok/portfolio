@@ -3,5 +3,5 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 200px;
-  background-image: url("../../res/Home/bg.jpg");
+  background-color: var(--bg-color);
 }
