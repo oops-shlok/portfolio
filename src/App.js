@@ -4,6 +4,7 @@ import AboutMe from "./Sections/AboutMe/AboutMe";
 import ScreenHeader from "./Sections/ScreenHeader/ScreenHeader";
 import ProjectList from "./Sections/Project/ProjectList/ProjectList";
 import Contact from "./Sections/ContactMe/Contatc/Contact";
+import Footer from "./Sections/ScreenFooter/Footer";
 
 function App() {
   return (
@@ -11,20 +12,22 @@ function App() {
       <ScreenHeader />
       <Home />
       <AboutMe />
-      <br/>
+      <br />
       <div id="Projects"></div>
-      <br/>
-      <br/>
-      <br/>
-      <br/>
-      <ProjectList/>
+      <br />
+      <br />
+      <br />
+      <br />
+      <ProjectList />
       <div id="ContactMe"></div>
-      <br/>
-      <br/>
-      <br/>
-      <Contact/>
-      <br/>
-      <br/>
+      <br />
+      <br />
+      <br />
+      <Contact />
+      <br />
+      <br />
+      <br />
+      <Footer />
     </div>
   );
 }
