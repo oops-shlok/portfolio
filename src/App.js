@@ -16,6 +16,11 @@ function App() {
       <br/>
       <br/>
       <ProjectList/>
+      <br/>
+      <div id="ContactMe"></div>
+      <br/>
+      <br/>
+      <br/>
     </div>
   );
 }
