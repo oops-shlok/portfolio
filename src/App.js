@@ -3,6 +3,7 @@ import Home from "./Sections/Home/Home";
 import AboutMe from "./Sections/AboutMe/AboutMe";
 import ScreenHeader from "./Sections/ScreenHeader/ScreenHeader";
 import ProjectList from "./Sections/Project/ProjectList/ProjectList";
+import Contact from "./Sections/ContactMe/Contatc/Contact";
 
 function App() {
   return (
@@ -15,10 +16,13 @@ function App() {
       <br/>
       <br/>
       <br/>
-      <ProjectList/>
       <br/>
+      <ProjectList/>
       <div id="ContactMe"></div>
       <br/>
+      <br/>
+      <br/>
+      <Contact/>
       <br/>
       <br/>
     </div>
