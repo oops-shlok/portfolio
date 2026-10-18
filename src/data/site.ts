@@ -23,6 +23,8 @@ export type Project = {
   image?: string;
   links: { label: string; href: string }[];
   featured: boolean;
+  year?: string;
+  art?: "graph" | "memory" | "chart";
   // Case-study page content (only for featured projects)
   problem?: string;
   role?: string;
@@ -35,6 +37,8 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "smarix",
+    year: "2025–26",
+    art: "graph",
     name: "Smarix",
     tagline:
       "An AI teammate that knows your codebase: chat over repos, PRs, issues and commits, plus impact analysis and onboarding.",
@@ -67,6 +71,8 @@ export const projects: Project[] = [
   },
   {
     slug: "lifeos",
+    year: "2025",
+    art: "memory",
     name: "LifeOS",
     tagline:
       "A personal AI assistant with long-term memory: semantic search over your chats, notes and todos, plus Google Calendar.",
@@ -96,6 +102,8 @@ export const projects: Project[] = [
   },
   {
     slug: "charting-app",
+    year: "2024",
+    art: "chart",
     name: "ChartingApp",
     tagline:
       "A stock-charting web app with technical indicators and drawing tools, backed by a Go API for Indian market data.",
@@ -118,6 +126,7 @@ export const projects: Project[] = [
   },
   {
     slug: "lynx-nitt",
+    year: "2022",
     name: "LYNX — NIT Trichy app",
     tagline:
       "The official campus app for NIT Trichy, built with Spider R&D Club and published on the Play Store and App Store.",
@@ -131,6 +140,7 @@ export const projects: Project[] = [
   },
   {
     slug: "orientation-21",
+    year: "2021",
     name: "Orientation '21",
     tagline: "Orientation app for NIT Trichy's incoming 2021 batch, built with Spider R&D Club.",
     stack: ["Mobile"],

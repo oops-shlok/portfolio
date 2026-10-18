@@ -1,10 +1,15 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { profile } from "@/data/site";
-import Nav from "@/components/Nav";
+import Header from "@/components/Header";
+import SmoothScroll from "@/components/fx/SmoothScroll";
+import Cursor from "@/components/fx/Cursor";
+import Preloader from "@/components/fx/Preloader";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const geist = Geist({ subsets: ["latin"], variable: "--font-geist" });
+const geistMono = Geist_Mono({ subsets: ["latin"], variable: "--font-geist-mono" });
+const instrument = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-instrument" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(profile.siteUrl),
@@ -18,15 +23,18 @@ export const metadata: Metadata = {
   },
 };
 
+export const viewport: Viewport = { themeColor: "#07070a" };
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en" className={`${geist.variable} ${geistMono.variable} ${instrument.variable}`}>
       <body className="font-sans antialiased">
-        <Nav />
-        <main className="mx-auto max-w-4xl px-4 sm:px-6">{children}</main>
-        <footer className="mx-auto max-w-4xl px-4 py-10 text-sm text-[var(--muted)] sm:px-6">
-          © {new Date().getFullYear()} {profile.name}
-        </footer>
+        <Preloader />
+        <SmoothScroll />
+        <Cursor />
+        <Header />
+        <main>{children}</main>
+        <div className="grain" aria-hidden="true" />
       </body>
     </html>
   );
