@@ -73,7 +73,7 @@ export const projects: Project[] = [
       "A personal AI assistant with long-term memory: semantic search over your chats, notes and todos, plus Google Calendar.",
     stack: ["Python", "FastAPI", "PostgreSQL", "FAISS", "SentenceTransformers", "OpenRouter", "Next.js 15", "TypeScript"],
     links: [
-      // TODO: add once the repo is public: { label: "Code", href: "https://github.com/oops-shlok/lifeos" },
+      { label: "Code", href: "https://github.com/oops-shlok/lifeos" },
       // TODO: { label: "Live demo", href: "https://…" },
     ],
     featured: true,
