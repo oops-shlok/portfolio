@@ -2,6 +2,7 @@
 
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { useRef } from "react";
+import PhotoCard from "./PhotoCard";
 
 const text =
   "I'm Shlok, an engineer at Standard Chartered and a builder of AI that actually knows things. I turn messy codebases, documents and conversations into systems you can ask questions, then wrap them in interfaces people enjoy using.";
@@ -25,11 +26,14 @@ export default function Statement() {
   return (
     <section className="relative px-4 py-32 sm:px-8 sm:py-48">
       <p className="mb-10 font-mono text-[11px] uppercase tracking-[0.2em] text-dim">(01) — About</p>
-      <p ref={ref} className="relative max-w-6xl text-[8.5vw] font-medium leading-[1.05] tracking-[-0.035em] sm:text-[5.2vw]" aria-label={text}>
-        {words.map((w, i) => (
-          <Word key={i} word={w} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} />
-        ))}
-      </p>
+      <div className="grid items-start gap-12 lg:grid-cols-[1fr_minmax(240px,22vw)] lg:gap-16">
+        <p ref={ref} className="relative text-[8.5vw] font-medium leading-[1.05] tracking-[-0.035em] sm:text-[5.2vw] lg:text-[4.4vw]" aria-label={text}>
+          {words.map((w, i) => (
+            <Word key={i} word={w} progress={scrollYProgress} range={[i / words.length, (i + 1) / words.length]} />
+          ))}
+        </p>
+        <PhotoCard className="mx-auto w-[70%] max-w-[320px] lg:mt-4 lg:w-full lg:max-w-none" />
+      </div>
     </section>
   );
 }

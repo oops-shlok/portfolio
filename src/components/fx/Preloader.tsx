@@ -28,7 +28,12 @@ export default function Preloader() {
       else setTimeout(() => setDone(true), 250);
     };
     raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
+    // Never trap the page behind the loader if animation frames are paused
+    const safety = setTimeout(() => setDone(true), dur + 1500);
+    return () => {
+      cancelAnimationFrame(raf);
+      clearTimeout(safety);
+    };
   }, []);
 
   return (
