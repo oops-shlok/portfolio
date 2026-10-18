@@ -2,7 +2,7 @@
 
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
-import ParticlePortrait from "./ParticlePortrait";
+import CoreField from "./CoreField";
 import { profile } from "@/data/site";
 import { INTRO_DELAY } from "@/lib";
 
@@ -33,10 +33,10 @@ export default function Hero() {
 
   return (
     <section ref={ref} className="relative h-[100svh] min-h-[600px] w-full overflow-hidden">
-      <ParticlePortrait src="/images/shlok-cutout.png" crop={0.92} className="absolute inset-0 h-full w-full" />
+      <CoreField className="absolute inset-0 h-full w-full" />
 
       {/* Soft vignette so the type stays readable over the particles */}
-      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_45%,transparent_30%,#07070a_85%)]" />
+      <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_45%,transparent_35%,#07070a_90%)]" />
 
       <motion.div style={reduce ? undefined : { opacity: fade }} className="pointer-events-none absolute left-4 top-24 max-w-xs font-mono text-[11px] uppercase leading-relaxed tracking-[0.18em] text-dim sm:left-8 sm:top-32">
         <motion.p initial={reduce ? false : { opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: INTRO_DELAY + 0.3, duration: 1 }}>
