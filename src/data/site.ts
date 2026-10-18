@@ -41,7 +41,6 @@ export const projects: Project[] = [
     stack: ["Python", "FastAPI", "OpenAI / Claude", "NetworkX", "Redis", "Postgres", "S3", "Next.js 15", "Docker", "Prometheus"],
     links: [
       { label: "Code", href: "https://github.com/SmarixAI/smarix" },
-      // TODO: { label: "Live demo", href: "https://…" },
     ],
     featured: true,
     problem:
@@ -74,7 +73,6 @@ export const projects: Project[] = [
     stack: ["Python", "FastAPI", "PostgreSQL", "FAISS", "SentenceTransformers", "OpenRouter", "Next.js 15", "TypeScript"],
     links: [
       { label: "Code", href: "https://github.com/oops-shlok/lifeos" },
-      // TODO: { label: "Live demo", href: "https://…" },
     ],
     featured: true,
     problem:
@@ -158,8 +156,8 @@ export const experience: Job[] = [
   },
   {
     company: "Smarix AI",
-    title: "Co-founder / Engineer", // TODO: confirm title
-    period: "2025 – 2026", // TODO: confirm
+    title: "Engineer",
+    period: "2025 – 2026",
     points: [
       "Built the RAG chatbot and retrieval layer (GraphRAG, query routing, multi-tenancy).",
       "Migrated storage to S3 and containerised the stack with Docker Compose and Prometheus/Grafana monitoring.",
