@@ -14,7 +14,7 @@ Next.js 15 (App Router, static export) · React 19 · TypeScript · Tailwind CSS
 
 All content lives in [`src/data/site.ts`](src/data/site.ts): profile, projects (featured ones get a
 case-study page at `/projects/<slug>`), experience, open-source contributions and skills.
-Replace `public/resume.pdf` to update the resume. The hero portrait is `public/images/profile.png` (set in `src/components/hero/Hero.tsx`; a transparent-background PNG looks best, and `crop` controls how much of the photo height is used).
+Replace `public/resume.pdf` to update the resume. The hero portrait is `public/images/shlok-cutout.png` (background removed from `shlok.jpg`) (set in `src/components/hero/Hero.tsx`; a transparent-background PNG looks best, and `crop` controls how much of the photo height is used).
 
 ## Develop
 

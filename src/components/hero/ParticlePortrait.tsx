@@ -20,10 +20,13 @@ const vertexShader = /* glsl */ `
   attribute vec3 aTarget;
   attribute vec3 aColor;
   attribute float aSeed;
+  attribute float aSize;
+  attribute float aRim;
 
   varying vec3 vColor;
   varying float vAlpha;
   varying float vHeat;
+  varying float vRim;
 
   float easeOutCubic(float t) { return 1.0 - pow(1.0 - t, 3.0); }
 
@@ -33,14 +36,14 @@ const vertexShader = /* glsl */ `
     vec3 p = mix(position, aTarget, easeOutCubic(t));
 
     // Idle breathing
-    p.x += sin(uTime * 0.9 + aSeed * 50.0) * 0.006;
-    p.y += cos(uTime * 0.8 + aSeed * 40.0) * 0.006;
+    p.x += sin(uTime * 0.9 + aSeed * 50.0) * 0.004;
+    p.y += cos(uTime * 0.8 + aSeed * 40.0) * 0.004;
 
     // Cursor repulsion
     vec2 d = p.xy - uMouse;
     float dist = length(d);
-    float heat = smoothstep(0.6, 0.0, dist) * uMouseStrength;
-    p.xy += normalize(d + 0.0001) * heat * 0.32;
+    float heat = smoothstep(0.55, 0.0, dist) * uMouseStrength;
+    p.xy += normalize(d + 0.0001) * heat * 0.3;
     p.z += heat * 0.6;
 
     // Scroll: spiral outward into a vortex
@@ -53,11 +56,12 @@ const vertexShader = /* glsl */ `
 
     vec4 mv = modelViewMatrix * vec4(p, 1.0);
     gl_Position = projectionMatrix * mv;
-    gl_PointSize = uSize * uPixelRatio * (1.0 + heat * 1.8) * (1.0 / -mv.z);
+    gl_PointSize = uSize * aSize * uPixelRatio * (1.0 + heat * 1.6) * (1.0 / -mv.z);
 
     vColor = aColor;
     vHeat = heat;
-    vAlpha = (0.35 + 0.65 * t) * (1.0 - s * 0.85);
+    vRim = aRim;
+    vAlpha = (0.3 + 0.7 * t) * (1.0 - s * 0.85);
   }
 `;
 
@@ -66,13 +70,16 @@ const fragmentShader = /* glsl */ `
   varying vec3 vColor;
   varying float vAlpha;
   varying float vHeat;
+  varying float vRim;
 
   void main() {
     vec2 c = gl_PointCoord - 0.5;
     float d = length(c);
     if (d > 0.5) discard;
-    float soft = smoothstep(0.5, 0.1, d);
-    vec3 col = mix(vColor, uAccent, clamp(vHeat * 1.4, 0.0, 1.0));
+    float soft = smoothstep(0.5, 0.15, d);
+    // Rim light on the silhouette edge, accent glow under the cursor
+    vec3 col = mix(vColor, vec3(0.93, 0.92, 0.88), vRim * 0.55);
+    col = mix(col, uAccent, clamp(vHeat * 1.3, 0.0, 1.0));
     gl_FragColor = vec4(col, soft * vAlpha);
   }
 `;
@@ -84,6 +91,7 @@ function prefersReducedMotion() {
   return typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 }
 
+// Photo pixels → particle attributes. Expects a transparent-background cutout.
 function buildGeometry(img: HTMLImageElement, cols: number, crop: number) {
   const srcH = img.naturalHeight * crop;
   const aspect = srcH / img.naturalWidth;
@@ -94,13 +102,18 @@ function buildGeometry(img: HTMLImageElement, cols: number, crop: number) {
   const ctx = canvas.getContext("2d", { willReadFrequently: true })!;
   ctx.drawImage(img, 0, 0, img.naturalWidth, srcH, 0, 0, cols, rows);
   const { data } = ctx.getImageData(0, 0, cols, rows);
+  const alphaAt = (x: number, y: number) =>
+    x < 0 || y < 0 || x >= cols || y >= rows ? 0 : data[(y * cols + x) * 4 + 3] / 255;
 
-  const height = 3.4; // world units
+  const height = 3.3; // world units
   const scale = height / rows;
   const targets: number[] = [];
   const starts: number[] = [];
   const colors: number[] = [];
   const seeds: number[] = [];
+  const sizes: number[] = [];
+  const rims: number[] = [];
+  const fadeStart = rows * 0.7;
 
   for (let y = 0; y < rows; y++) {
     for (let x = 0; x < cols; x++) {
@@ -108,14 +121,23 @@ function buildGeometry(img: HTMLImageElement, cols: number, crop: number) {
       const a = data[i + 3] / 255;
       if (a < 0.5) continue;
       // Dissolve the bottom edge instead of a hard cut
-      const fadeStart = rows * 0.72;
-      if (y > fadeStart && Math.random() < (y - fadeStart) / (rows - fadeStart)) continue;
+      if (y > fadeStart && Math.random() < Math.pow((y - fadeStart) / (rows - fadeStart), 0.8)) continue;
+
       const r = data[i] / 255;
       const g = data[i + 1] / 255;
       const b = data[i + 2] / 255;
       const lum = 0.2126 * r + 0.7152 * g + 0.0722 * b;
 
-      targets.push((x - cols / 2) * scale, (rows / 2 - y) * scale, lum * 0.45);
+      // Silhouette edge: any transparent neighbour within 2px
+      let rim = 0;
+      for (let k = 1; k <= 2 && !rim; k++) {
+        if (alphaAt(x - k, y) < 0.5 || alphaAt(x + k, y) < 0.5 || alphaAt(x, y - k) < 0.5 || alphaAt(x, y + k) < 0.5) rim = k === 1 ? 1 : 0.5;
+      }
+
+      // Jitter within the cell so the grid never reads as a grid
+      const jx = (Math.random() - 0.5) * 0.5;
+      const jy = (Math.random() - 0.5) * 0.5;
+      targets.push((x + jx - cols / 2) * scale, (rows / 2 - y - jy) * scale, lum * 0.22 + rim * 0.05);
 
       // Start positions: a wide random shell around the portrait
       const theta = Math.random() * Math.PI * 2;
@@ -123,9 +145,19 @@ function buildGeometry(img: HTMLImageElement, cols: number, crop: number) {
       const rad = 4 + Math.random() * 5;
       starts.push(rad * Math.sin(phi) * Math.cos(theta), rad * Math.sin(phi) * Math.sin(theta), rad * Math.cos(phi) - 2);
 
-      // Lift the shadows a little so dark clothes stay visible on the dark page
-      const lift = 0.18;
-      colors.push(lift + r * (1 - lift), lift + g * (1 - lift), lift + b * (1 - lift));
+      // Tone-map for a dark page: lift shadows, brighten mids, keep a touch of saturation
+      // S-curve contrast first so eyes, brows and smile separate from the skin
+      const contrast = (c: number) => Math.min(1, Math.max(0, (c - 0.5) * 1.35 + 0.5));
+      const tone = (c: number) => 0.1 + 0.9 * Math.pow(contrast(c), 0.85);
+      const sat = 1.12;
+      const tr = tone(lum + (r - lum) * sat);
+      const tg = tone(lum + (g - lum) * sat);
+      const tb = tone(lum + (b - lum) * sat);
+      colors.push(tr, tg, tb);
+
+      // Halftone feel: brighter areas get bigger dots
+      sizes.push(0.45 + Math.pow(contrast(lum), 0.9) * 1.15 + rim * 0.2);
+      rims.push(rim);
       seeds.push(Math.random());
     }
   }
@@ -135,6 +167,8 @@ function buildGeometry(img: HTMLImageElement, cols: number, crop: number) {
   geo.setAttribute("aTarget", new THREE.Float32BufferAttribute(targets, 3));
   geo.setAttribute("aColor", new THREE.Float32BufferAttribute(colors, 3));
   geo.setAttribute("aSeed", new THREE.Float32BufferAttribute(seeds, 1));
+  geo.setAttribute("aSize", new THREE.Float32BufferAttribute(sizes, 1));
+  geo.setAttribute("aRim", new THREE.Float32BufferAttribute(rims, 1));
   return geo;
 }
 
@@ -187,7 +221,7 @@ export default function ParticlePortrait({ src, className, crop = 1 }: Props) {
       uScroll: { value: 0 },
       uMouse: { value: new THREE.Vector2(99, 99) },
       uMouseStrength: { value: 0 },
-      uSize: { value: isSmall ? 34 : 44 },
+      uSize: { value: isSmall ? 20 : 21 },
       uPixelRatio: { value: pixelRatio },
       uAccent: { value: new THREE.Color("#cdfa50") },
     };
@@ -217,7 +251,7 @@ export default function ParticlePortrait({ src, className, crop = 1 }: Props) {
     img.src = src;
     img.onload = () => {
       if (disposed) return;
-      const geo = buildGeometry(img, isSmall ? 110 : 150, crop);
+      const geo = buildGeometry(img, isSmall ? 150 : 250, crop);
       points = new THREE.Points(geo, material);
       group.add(points);
       mount.dataset.ready = "true";

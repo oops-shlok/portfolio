@@ -139,10 +139,10 @@ export const projects: Project[] = [
     featured: false,
   },
   {
-    slug: "orientation-21",
-    year: "2021",
-    name: "Orientation '21",
-    tagline: "Orientation app for NIT Trichy's incoming 2021 batch, built with Spider R&D Club.",
+    slug: "orientation-22",
+    year: "2022",
+    name: "Orientation '22",
+    tagline: "Orientation app for NIT Trichy's incoming 2022 batch, built with Spider R&D Club.",
     stack: ["Mobile"],
     image: "/images/OT21.png",
     links: [
@@ -177,7 +177,7 @@ export const experience: Job[] = [
     company: "Spider R&D Club, NIT Trichy",
     title: "App Developer",
     period: "TODO: 2021 – 2024",
-    points: ["Built and shipped LYNX, NIT Trichy's official app, on Android and iOS, plus the Orientation '21 app."],
+    points: ["Built and shipped LYNX, NIT Trichy's official app, on Android and iOS, plus the Orientation '22 app."],
   },
 ];
 

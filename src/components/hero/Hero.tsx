@@ -33,8 +33,7 @@ export default function Hero() {
 
   return (
     <section ref={ref} className="relative h-[100svh] min-h-[600px] w-full overflow-hidden">
-      {/* TODO: swap for the LinkedIn headshot (set crop back to 1 for a head-and-shoulders photo) */}
-      <ParticlePortrait src="/images/profile.png" crop={0.58} className="absolute inset-0 h-full w-full" />
+      <ParticlePortrait src="/images/shlok-cutout.png" crop={0.92} className="absolute inset-0 h-full w-full" />
 
       {/* Soft vignette so the type stays readable over the particles */}
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_70%_45%,transparent_30%,#07070a_85%)]" />
